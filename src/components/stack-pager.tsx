@@ -76,6 +76,36 @@ export function StackPager() {
 
   return (
     <div className="mt-4">
+      <style>{`
+        @keyframes dot-slide-in {
+          from {
+            opacity: 0;
+            transform: scale(0.5);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        
+        @keyframes dot-pulse {
+          0%, 100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.3);
+          }
+        }
+        
+        .dot-item {
+          animation: dot-slide-in 0.3s ease-out;
+        }
+        
+        .dot-active {
+          animation: dot-pulse 0.6s ease-in-out;
+        }
+      `}</style>
+
       <div
         className={`grid gap-2 ${columns === 2 ? "grid-cols-2" : "grid-cols-3"}`}
       >
@@ -107,8 +137,10 @@ export function StackPager() {
               type="button"
               onClick={() => setPage(idx)}
               aria-label={`Go to stack page ${idx + 1}`}
-              className={`h-2.5 w-2.5 rounded-full border border-border transition ${
-                idx === page ? "bg-foreground" : "bg-transparent"
+              className={`h-2.5 w-2.5 rounded-full border border-border transition-all duration-300 dot-item ${
+                idx === page
+                  ? "bg-foreground dot-active"
+                  : "bg-transparent hover:bg-muted"
               }`}
             />
           ))}
